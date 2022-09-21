@@ -27,6 +27,12 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
 
         private void btnVisualizza_Click(object sender, EventArgs e)
         {
+            if (openFileDialog.FileName == "")
+            {
+                MessageBox.Show("Nessun file selezionato");
+                return;
+            }
+
             DividiDati();
             switch (cmbRicerca.Text)
             {
@@ -34,6 +40,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
                     StampaCSV();
                     break;
                 case "contiene":
+                    RicercaCognomeContiene();
                     break;
                 case "inizia":
                     break;
@@ -47,7 +54,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
 
         void DividiDati()
         {
-            using (StreamReader sr = new StreamReader("rubrica.csv"))   // attraverso l'uso di using, lo streamreader si apre e si chiude all'interno delle parentesi
+            using (StreamReader sr = new StreamReader(openFileDialog.FileName))   // attraverso l'uso di using, lo streamreader si apre e si chiude all'interno delle parentesi
             {
                 string[] appoggio = new string[N_INFO];
                 string riga;
@@ -73,6 +80,26 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             for (int i = 0; i < N_RECORD; i++)
             {
                 lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
+            }
+        }
+
+        void RicercaCognomeContiene()
+        {
+            if (txtCognome.Text == "")
+            {
+                MessageBox.Show("Nessun cognome inserito");
+                return;
+            }
+
+            lstVisualizza.Items.Clear();
+            string target = txtCognome.Text.ToLower();
+
+            for (int i = 0; i < N_RECORD; i++)
+            {
+                if (cognomi[i].ToLower().Contains(target))
+                {
+                    lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
+                }
             }
         }
     }

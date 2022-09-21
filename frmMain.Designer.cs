@@ -129,10 +129,6 @@
             this.lstVisualizza.Size = new System.Drawing.Size(658, 349);
             this.lstVisualizza.TabIndex = 5;
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "openFileDialog1";
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
