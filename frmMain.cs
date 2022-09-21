@@ -27,6 +27,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
 
         private void btnVisualizza_Click(object sender, EventArgs e)
         {
+            DividiDati();
             switch (cmbRicerca.Text)
             {
                 case "stampa CSV":
@@ -68,7 +69,11 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
 
         void StampaCSV()
         {
-            DividiDati();
+            lstVisualizza.Items.Clear();
+            for (int i = 0; i < N_RECORD; i++)
+            {
+                lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
+            }
         }
     }
 }
