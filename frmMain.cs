@@ -22,6 +22,9 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             if (risultatoAperturaFile == DialogResult.OK)  // controllo che l'apertura sia andata a buon fine
             {
                 txtFile.Text = openFileDialog.FileName;     // assegno il percorso del file scelto al testo della textbox
+            } else
+            {
+                MessageBox.Show("Apertura del file non riuscita");
             }
         }
 
