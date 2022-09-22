@@ -49,6 +49,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
                     RicercaCognomeInizia();
                     break;
                 case "finisce":
+                    RicercaCognomeFinisce();
                     break;
                 default:
                     MessageBox.Show("Filtro di ricerca inesistente");
@@ -120,6 +121,26 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             for (int i = 0; i < N_RECORD; i++)
             {
                 if (cognomi[i].ToLower().StartsWith(target))
+                {
+                    lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
+                }
+            }
+        }
+
+        void RicercaCognomeFinisce()
+        {
+            if (txtCognome.Text == "")
+            {
+                MessageBox.Show("Nessun cognome inserito");
+                return;
+            }
+
+            lstVisualizza.Items.Clear();
+            string target = txtCognome.Text.ToLower();
+
+            for (int i = 0; i < N_RECORD; i++)
+            {
+                if (cognomi[i].ToLower().EndsWith(target))
                 {
                     lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
                 }
