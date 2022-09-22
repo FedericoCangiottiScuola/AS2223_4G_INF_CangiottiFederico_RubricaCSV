@@ -24,7 +24,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
                 txtFile.Text = openFileDialog.FileName;     // assegno il percorso del file scelto al testo della textbox
             } else
             {
-                MessageBox.Show("Apertura del file non riuscita");
+                MessageBox.Show("Apertura del file non riuscita", "Errore");
             }
         }
 
@@ -32,7 +32,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
         {
             if (openFileDialog.FileName == "")
             {
-                MessageBox.Show("Nessun file selezionato");
+                MessageBox.Show("Nessun file selezionato", "Errore");
                 return;
             }
 
@@ -52,7 +52,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
                     RicercaCognomeFinisce();
                     break;
                 default:
-                    MessageBox.Show("Filtro di ricerca inesistente");
+                    MessageBox.Show("Filtro di ricerca inesistente", "Errore");
                     break;
             }
         }
@@ -65,16 +65,22 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
                 string riga;
                 int i = 0;
 
-                while (!sr.EndOfStream)
+                try
                 {
-                    riga = sr.ReadLine();   // leggo una riga alla volta dal CSV
-                    appoggio = riga.Split(","); // divido la stringa salvandola nel vettore
+                    while (!sr.EndOfStream)
+                    {
+                        riga = sr.ReadLine();   // leggo una riga alla volta dal CSV
+                        appoggio = riga.Split(","); // divido la stringa salvandola nel vettore
 
-                    cognomi[i] = appoggio[0];   // assegno il nome al vettore corrispondente
-                    nomi[i] = appoggio[1];  // assegno il cognome al vettore corrispondente
-                    provenienza[i] = appoggio[2];   // assegno la provenienza al vettore corrispondente
+                        cognomi[i] = appoggio[0];   // assegno il nome al vettore corrispondente
+                        nomi[i] = appoggio[1];  // assegno il cognome al vettore corrispondente
+                        provenienza[i] = appoggio[2];   // assegno la provenienza al vettore corrispondente
 
-                    i++;
+                        i++;
+                    }
+                } catch (Exception e)
+                {
+                    MessageBox.Show(e.ToString(), "Errore durante il carimento del file");
                 }
             }
         }
@@ -92,7 +98,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
         {
             if (txtCognome.Text == "")
             {
-                MessageBox.Show("Nessun cognome inserito");
+                MessageBox.Show("Nessun cognome inserito", "Errore");
                 return;
             }
 
@@ -111,7 +117,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
         {
             if (txtCognome.Text == "")
             {
-                MessageBox.Show("Nessun cognome inserito");
+                MessageBox.Show("Nessun cognome inserito", "Errore");
                 return;
             }
 
@@ -131,7 +137,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
         {
             if (txtCognome.Text == "")
             {
-                MessageBox.Show("Nessun cognome inserito");
+                MessageBox.Show("Nessun cognome inserito", "Errore");
                 return;
             }
 
