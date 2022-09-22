@@ -46,6 +46,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
                     RicercaCognomeContiene();
                     break;
                 case "inizia":
+                    RicercaCognomeInizia();
                     break;
                 case "finisce":
                     break;
@@ -100,6 +101,25 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             for (int i = 0; i < N_RECORD; i++)
             {
                 if (cognomi[i].ToLower().Contains(target))
+                {
+                    lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
+                }
+            }
+        }
+        void RicercaCognomeInizia()
+        {
+            if (txtCognome.Text == "")
+            {
+                MessageBox.Show("Nessun cognome inserito");
+                return;
+            }
+
+            lstVisualizza.Items.Clear();
+            string target = txtCognome.Text.ToLower();
+
+            for (int i = 0; i < N_RECORD; i++)
+            {
+                if (cognomi[i].ToLower().StartsWith(target))
                 {
                     lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
                 }
