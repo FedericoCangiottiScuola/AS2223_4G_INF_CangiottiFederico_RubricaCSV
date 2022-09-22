@@ -12,6 +12,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
         const int N_RECORD = 10;    // numero righe
         const int N_INFO = 3;   // numero di informazioni (numero colonne)
 
+        bool caricamentoEffettuato = false;
         string[] cognomi = new string[N_RECORD];
         string[] nomi = new string[N_RECORD];
         string[] provenienza = new string[N_RECORD];
@@ -22,6 +23,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             if (risultatoAperturaFile == DialogResult.OK)  // controllo che l'apertura sia andata a buon fine
             {
                 txtFile.Text = openFileDialog.FileName;     // assegno il percorso del file scelto al testo della textbox
+                caricamentoEffettuato = false;
             } else
             {
                 MessageBox.Show("Apertura del file non riuscita", "Errore");
@@ -36,7 +38,11 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
                 return;
             }
 
-            DividiDati();
+            if (!caricamentoEffettuato)     // disattivazione funzione DividiDati() quando non necessaria
+            {
+                DividiDati();
+            }
+            
             switch (cmbRicerca.Text)
             {
                 case "stampa CSV":
@@ -82,6 +88,8 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
                 {
                     MessageBox.Show(e.ToString(), "Errore durante il carimento del file");
                 }
+
+                caricamentoEffettuato = true;
             }
         }
 
