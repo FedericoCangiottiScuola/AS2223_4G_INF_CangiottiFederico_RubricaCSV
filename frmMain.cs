@@ -9,13 +9,13 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             InitializeComponent();
         }
 
-        const int N_RECORD = 10;    // numero righe
+        static int nRecord = 0;    // numero righe
         const int N_INFO = 3;   // numero di informazioni (numero colonne)
 
         bool caricamentoEffettuato = false;
-        string[] cognomi = new string[N_RECORD];
-        string[] nomi = new string[N_RECORD];
-        string[] provenienza = new string[N_RECORD];
+        string[] cognomi;
+        string[] nomi;
+        string[] provenienza;
 
         private void btnCaricaFile_Click(object sender, EventArgs e)
         {
@@ -23,6 +23,10 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             if (risultatoAperturaFile == DialogResult.OK)  // controllo che l'apertura sia andata a buon fine
             {
                 txtFile.Text = openFileDialog.FileName;     // assegno il percorso del file scelto al testo della textbox
+                nRecord = File.ReadLines(openFileDialog.FileName).Count();     // ottengo il numero delle righe del file
+                Array.Resize(ref cognomi, nRecord);    // ridimensiono l'array in base al numero di righe
+                Array.Resize(ref nomi, nRecord);
+                Array.Resize(ref provenienza, nRecord);
                 caricamentoEffettuato = false;
             } else
             {
@@ -76,7 +80,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
                     while (!sr.EndOfStream)
                     {
                         riga = sr.ReadLine();   // leggo una riga alla volta dal CSV
-                        appoggio = riga.Split(","); // divido la stringa salvandola nel vettore
+                        appoggio = riga.Split(",");     // divido la stringa salvandola nel vettore
 
                         cognomi[i] = appoggio[0];   // assegno il nome al vettore corrispondente
                         nomi[i] = appoggio[1];  // assegno il cognome al vettore corrispondente
@@ -96,7 +100,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
         void StampaCSV()
         {
             lstVisualizza.Items.Clear();
-            for (int i = 0; i < N_RECORD; i++)
+            for (int i = 0; i < nRecord; i++)
             {
                 lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
             }
@@ -113,7 +117,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             lstVisualizza.Items.Clear();
             string target = txtCognome.Text.ToLower();
 
-            for (int i = 0; i < N_RECORD; i++)
+            for (int i = 0; i < nRecord; i++)
             {
                 if (cognomi[i].ToLower().Contains(target))
                 {
@@ -132,7 +136,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             lstVisualizza.Items.Clear();
             string target = txtCognome.Text.ToLower();
 
-            for (int i = 0; i < N_RECORD; i++)
+            for (int i = 0; i < nRecord; i++)
             {
                 if (cognomi[i].ToLower().StartsWith(target))
                 {
@@ -152,7 +156,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             lstVisualizza.Items.Clear();
             string target = txtCognome.Text.ToLower();
 
-            for (int i = 0; i < N_RECORD; i++)
+            for (int i = 0; i < nRecord; i++)
             {
                 if (cognomi[i].ToLower().EndsWith(target))
                 {
