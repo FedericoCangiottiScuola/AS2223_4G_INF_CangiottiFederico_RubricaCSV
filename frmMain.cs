@@ -82,8 +82,8 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
                         riga = sr.ReadLine();   // leggo una riga alla volta dal CSV
                         appoggio = riga.Split(",");     // divido la stringa salvandola nel vettore
 
-                        cognomi[i] = appoggio[0];   // assegno il nome al vettore corrispondente
-                        nomi[i] = appoggio[1];  // assegno il cognome al vettore corrispondente
+                        cognomi[i] = appoggio[0];   // assegno il cognome al vettore corrispondente
+                        nomi[i] = appoggio[1];  // assegno il nome al vettore corrispondente
                         provenienza[i] = appoggio[2];   // assegno la provenienza al vettore corrispondente
 
                         i++;
