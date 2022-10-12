@@ -10,12 +10,8 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
         }
 
         static int nRecord = 0;    // numero righe
-        const int N_INFO = 3;   // numero di informazioni (numero colonne)
-
+        Contatto[] contatti = new Contatto[nRecord];
         bool caricamentoEffettuato = false;
-        string[] cognomi;
-        string[] nomi;
-        string[] provenienza;
 
         private void btnCaricaFile_Click(object sender, EventArgs e)
         {
@@ -24,9 +20,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             {
                 txtFile.Text = openFileDialog.FileName;     // assegno il percorso del file scelto al testo della textbox
                 nRecord = File.ReadLines(openFileDialog.FileName).Count();     // ottengo il numero delle righe del file
-                Array.Resize(ref cognomi, nRecord);    // ridimensiono l'array in base al numero di righe
-                Array.Resize(ref nomi, nRecord);
-                Array.Resize(ref provenienza, nRecord);
+                Array.Resize(ref contatti, nRecord);    // ridimensiono l'array in base al numero di righe
                 caricamentoEffettuato = false;
             } else
             {
@@ -71,20 +65,15 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
         {
             using (StreamReader sr = new StreamReader(openFileDialog.FileName))   // attraverso l'uso di using, lo streamreader si apre e si chiude all'interno delle parentesi
             {
-                string[] appoggio = new string[N_INFO];
-                string riga;
-                int i = 0;
-
                 try
                 {
+                    string riga;
+                    int i = 0;
                     while (!sr.EndOfStream)
                     {
                         riga = sr.ReadLine();   // leggo una riga alla volta dal CSV
-                        appoggio = riga.Split(",");     // divido la stringa salvandola nel vettore
-
-                        cognomi[i] = appoggio[0];   // assegno il cognome al vettore corrispondente
-                        nomi[i] = appoggio[1];  // assegno il nome al vettore corrispondente
-                        provenienza[i] = appoggio[2];   // assegno la provenienza al vettore corrispondente
+                        Contatto contatto = new Contatto(riga);
+                        contatti[i] = contatto;
 
                         i++;
                     }
@@ -102,7 +91,7 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
             lstVisualizza.Items.Clear();
             for (int i = 0; i < nRecord; i++)
             {
-                lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
+                lstVisualizza.Items.Add($"{contatti[i].getSurname()}, {contatti[i].getName()}, {contatti[i].getCity()}");
             }
         }
 
@@ -119,9 +108,9 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
 
             for (int i = 0; i < nRecord; i++)
             {
-                if (cognomi[i].ToLower().Contains(target))
+                if (contatti[i].getSurname().ToLower().Contains(target))
                 {
-                    lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
+                    lstVisualizza.Items.Add($"{contatti[i].getSurname()}, {contatti[i].getName()}, {contatti[i].getCity()}");
                 }
             }
         }
@@ -138,9 +127,9 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
 
             for (int i = 0; i < nRecord; i++)
             {
-                if (cognomi[i].ToLower().StartsWith(target))
+                if (contatti[i].getSurname().ToLower().StartsWith(target))
                 {
-                    lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
+                    lstVisualizza.Items.Add($"{contatti[i].getSurname()}, {contatti[i].getName()}, {contatti[i].getCity()}");
                 }
             }
         }
@@ -158,11 +147,48 @@ namespace AS2223_4G_INF_CangiottiFederico_RubricaCSV
 
             for (int i = 0; i < nRecord; i++)
             {
-                if (cognomi[i].ToLower().EndsWith(target))
+                if (contatti[i].getSurname().ToLower().EndsWith(target))
                 {
-                    lstVisualizza.Items.Add($"{cognomi[i]}, {nomi[i]}, {provenienza[i]}");
+                    lstVisualizza.Items.Add($"{contatti[i].getSurname()}, {contatti[i].getName()}, {contatti[i].getCity()}");
                 }
             }
+        }
+    }
+
+    class Contatto
+    {
+        string name;
+        string surname;
+        string city;
+
+        public string getName()
+        {
+            return name;
+        }
+
+        public string getSurname()
+        {
+            return surname;
+        }
+
+        public string getCity()
+        { 
+            return city;
+        }
+
+        public Contatto(string record)
+        {
+            string[] supporto = record.Split(",");
+            surname = supporto[0];
+            name = supporto[1];
+            city = supporto[2];
+        }
+
+        public Contatto(string name, string surname, string city)
+        {
+            this.name = name;
+            this.surname = surname;
+            this.city = city;
         }
     }
 }
